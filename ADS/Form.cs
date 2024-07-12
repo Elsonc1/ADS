@@ -285,9 +285,6 @@ namespace ADS
                 sqlConnection.Close();
             }
         }
-
-        //teste
-
         public void LogMessage(string message, LogLevel level)
         {
             string logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "application.log");
