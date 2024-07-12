@@ -312,7 +312,37 @@ namespace ADS
 
         private void selectedFileConfig_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
 
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string configFilePath = openFileDialog.FileName;
+
+                    try
+                    {
+                        string configXml = File.ReadAllText(configFilePath);
+                        doc.LoadXml(configXml);
+
+                        textBoxHost.Text = doc.SelectSingleNode("/config/host").InnerText;
+                        textBoxBanco.Text = doc.SelectSingleNode("/config/banco").InnerText;
+                        textBoxUser.Text = doc.SelectSingleNode("/config/user").InnerText;
+                        textBoxPassword.Text = doc.SelectSingleNode("/config/password").InnerText;
+
+                        LogMessage("Configuração carregada com sucesso a partir do arquivo selecionado.", LogLevel.INFO);
+                        MessageBox.Show("Configuração carregada com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogMessage($"Erro ao carregar configuração: {ex.Message}", LogLevel.ERROR);
+                        MessageBox.Show($"Erro ao carregar configuração: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         public enum LogLevel
