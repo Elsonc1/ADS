@@ -10,6 +10,7 @@ namespace ADS
         string folderContent;
         string connectionString = string.Empty;
         string[] xmlFiles;
+        bool sucessMessagesShow = false;
 
         public readXml()
         {
@@ -85,6 +86,7 @@ namespace ADS
                 {
                     try
                     {
+
                         doc.Load(file);
                         XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
                         nsmgr.AddNamespace("cte", "http://www.portalfiscal.inf.br/cte");
@@ -140,9 +142,14 @@ namespace ADS
 
                     try
                     {
+                        if (!sucessMessagesShow)
+                        {
+                            MessageBox.Show("Dados inseridos com sucesso!");
+                            sucessMessagesShow = true;
+                        }
                         command.ExecuteNonQuery();
                         LogMessage("Dados da NF-e inseridos com sucesso no banco de dados.", LogLevel.INFO);
-                        MessageBox.Show("Dados inseridos com sucesso!");
+                        
                     }
                     catch (Exception ex)
                     {
@@ -170,12 +177,15 @@ namespace ADS
                     command.Parameters.AddWithValue("@RazaoSocialEmit", values.RazaoSocialEmit);
                     command.Parameters.AddWithValue("@CNPJTomador", values.CNPJTomador);
                     command.Parameters.AddWithValue("@RazaoSocialTomador", values.RazaoSocialTomador);
-
                     try
                     {
+                        if (!sucessMessagesShow)
+                        {
+                            MessageBox.Show("Dados inseridos com sucesso!");
+                            sucessMessagesShow = true;
+                        }
                         command.ExecuteNonQuery();
                         LogMessage("Dados inseridos com sucesso!", LogLevel.INFO);
-                        MessageBox.Show("Dados inseridos com sucesso!");
                     }
                     catch (Exception ex)
                     {
