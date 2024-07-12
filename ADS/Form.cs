@@ -10,6 +10,7 @@ namespace ADS
         string folderContent;
         string connectionString = string.Empty;
         string[] xmlFiles;
+        bool sucessMessagesShow = false;
 
         public readXml()
         {
@@ -25,7 +26,7 @@ namespace ADS
             string configXml = File.ReadAllText(_fileInfo.FullName);
             try
             {
-                
+
 
                 doc.LoadXml(configXml);
 
@@ -140,9 +141,14 @@ namespace ADS
 
                     try
                     {
+                        if (!sucessMessagesShow)
+                        {
+                            MessageBox.Show("Dados inseridos com sucesso!");
+                            sucessMessagesShow = true;
+                        }
                         command.ExecuteNonQuery();
                         LogMessage("Dados da NF-e inseridos com sucesso no banco de dados.", LogLevel.INFO);
-                        MessageBox.Show("Dados inseridos com sucesso!");
+
                     }
                     catch (Exception ex)
                     {
@@ -170,12 +176,15 @@ namespace ADS
                     command.Parameters.AddWithValue("@RazaoSocialEmit", values.RazaoSocialEmit);
                     command.Parameters.AddWithValue("@CNPJTomador", values.CNPJTomador);
                     command.Parameters.AddWithValue("@RazaoSocialTomador", values.RazaoSocialTomador);
-
                     try
                     {
+                        if (!sucessMessagesShow)
+                        {
+                            MessageBox.Show("Dados inseridos com sucesso!");
+                            sucessMessagesShow = true;
+                        }
                         command.ExecuteNonQuery();
                         LogMessage("Dados inseridos com sucesso!", LogLevel.INFO);
-                        MessageBox.Show("Dados inseridos com sucesso!");
                     }
                     catch (Exception ex)
                     {
@@ -289,7 +298,7 @@ namespace ADS
         {
             string logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "application.log");
             string logMessage = $"{DateTime.Now} [{level}] : {message}";
-            
+
             const int maxFileSizeInBytes = 5 * 1024 * 1024;
 
             if (File.Exists(logFilePath) && new FileInfo(logFilePath).Length > maxFileSizeInBytes)
@@ -300,6 +309,42 @@ namespace ADS
 
             File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
         }
+
+        private void selectedFileConfig_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string configFilePath = openFileDialog.FileName;
+
+                    try
+                    {
+                        string configXml = File.ReadAllText(configFilePath);
+                        doc.LoadXml(configXml);
+
+                        textBoxHost.Text = doc.SelectSingleNode("/config/host").InnerText;
+                        textBoxBanco.Text = doc.SelectSingleNode("/config/banco").InnerText;
+                        textBoxUser.Text = doc.SelectSingleNode("/config/user").InnerText;
+                        textBoxPassword.Text = doc.SelectSingleNode("/config/password").InnerText;
+
+                        LogMessage("Configuração carregada com sucesso a partir do arquivo selecionado.", LogLevel.INFO);
+                        MessageBox.Show("Configuração carregada com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogMessage($"Erro ao carregar configuração: {ex.Message}", LogLevel.ERROR);
+                        MessageBox.Show($"Erro ao carregar configuração: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
         public enum LogLevel
         {
             INFO,
