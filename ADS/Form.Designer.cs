@@ -45,11 +45,14 @@
             labelTest = new Label();
             buttonTest = new Button();
             textBox1 = new TextBox();
+            arquivoConfiguração = new Label();
+            diretorio = new Label();
+            selectedFileConfig = new Button();
             SuspendLayout();
             // 
             // selectionButton
             // 
-            selectionButton.Location = new Point(201, 27);
+            selectionButton.Location = new Point(201, 68);
             selectionButton.Name = "selectionButton";
             selectionButton.Size = new Size(109, 27);
             selectionButton.TabIndex = 0;
@@ -59,7 +62,7 @@
             // 
             // processButton
             // 
-            processButton.Location = new Point(201, 75);
+            processButton.Location = new Point(201, 115);
             processButton.Name = "processButton";
             processButton.Size = new Size(109, 27);
             processButton.TabIndex = 1;
@@ -70,7 +73,7 @@
             // selectionText
             // 
             selectionText.AutoSize = true;
-            selectionText.Location = new Point(201, 9);
+            selectionText.Location = new Point(201, 53);
             selectionText.Name = "selectionText";
             selectionText.Size = new Size(97, 15);
             selectionText.TabIndex = 2;
@@ -79,7 +82,7 @@
             // processText
             // 
             processText.AutoSize = true;
-            processText.Location = new Point(201, 57);
+            processText.Location = new Point(201, 97);
             processText.Name = "processText";
             processText.Size = new Size(143, 15);
             processText.TabIndex = 3;
@@ -103,7 +106,7 @@
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(201, 166);
+            buttonSave.Location = new Point(201, 210);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(109, 23);
             buttonSave.TabIndex = 10;
@@ -114,7 +117,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(201, 148);
+            label4.Location = new Point(194, 192);
             label4.Name = "label4";
             label4.Size = new Size(116, 15);
             label4.TabIndex = 11;
@@ -172,7 +175,7 @@
             // labelTest
             // 
             labelTest.AutoSize = true;
-            labelTest.Location = new Point(201, 105);
+            labelTest.Location = new Point(201, 141);
             labelTest.Name = "labelTest";
             labelTest.Size = new Size(92, 15);
             labelTest.TabIndex = 18;
@@ -180,7 +183,7 @@
             // 
             // buttonTest
             // 
-            buttonTest.Location = new Point(201, 123);
+            buttonTest.Location = new Point(201, 160);
             buttonTest.Name = "buttonTest";
             buttonTest.Size = new Size(109, 22);
             buttonTest.TabIndex = 19;
@@ -192,14 +195,45 @@
             // 
             textBox1.Location = new Point(22, 210);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(288, 23);
+            textBox1.Size = new Size(109, 23);
             textBox1.TabIndex = 20;
+            // 
+            // arquivoConfiguração
+            // 
+            arquivoConfiguração.AutoSize = true;
+            arquivoConfiguração.Location = new Point(201, 9);
+            arquivoConfiguração.Name = "arquivoConfiguração";
+            arquivoConfiguração.Size = new Size(199, 15);
+            arquivoConfiguração.TabIndex = 21;
+            arquivoConfiguração.Text = "Selecione o arquivo de configuração";
+            // 
+            // diretorio
+            // 
+            diretorio.AutoSize = true;
+            diretorio.Location = new Point(22, 192);
+            diretorio.Name = "diretorio";
+            diretorio.Size = new Size(53, 15);
+            diretorio.TabIndex = 22;
+            diretorio.Text = "Diretório";
+            // 
+            // selectedFileConfig
+            // 
+            selectedFileConfig.Location = new Point(201, 27);
+            selectedFileConfig.Name = "selectedFileConfig";
+            selectedFileConfig.Size = new Size(109, 27);
+            selectedFileConfig.TabIndex = 23;
+            selectedFileConfig.Text = "Selecionar";
+            selectedFileConfig.UseVisualStyleBackColor = true;
+            selectedFileConfig.Click += selectedFileConfig_Click;
             // 
             // readXml
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(348, 245);
+            ClientSize = new Size(404, 237);
+            Controls.Add(selectedFileConfig);
+            Controls.Add(diretorio);
+            Controls.Add(arquivoConfiguração);
             Controls.Add(textBox1);
             Controls.Add(buttonTest);
             Controls.Add(labelTest);
@@ -245,5 +279,8 @@
         private Label labelTest;
         private Button buttonTest;
         private TextBox textBox1;
+        private Label arquivoConfiguração;
+        private Label diretorio;
+        private Button selectedFileConfig;
     }
 }

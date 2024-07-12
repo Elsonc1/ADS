@@ -26,7 +26,7 @@ namespace ADS
             string configXml = File.ReadAllText(_fileInfo.FullName);
             try
             {
-                
+
 
                 doc.LoadXml(configXml);
 
@@ -86,7 +86,6 @@ namespace ADS
                 {
                     try
                     {
-
                         doc.Load(file);
                         XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
                         nsmgr.AddNamespace("cte", "http://www.portalfiscal.inf.br/cte");
@@ -149,7 +148,7 @@ namespace ADS
                         }
                         command.ExecuteNonQuery();
                         LogMessage("Dados da NF-e inseridos com sucesso no banco de dados.", LogLevel.INFO);
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -299,7 +298,7 @@ namespace ADS
         {
             string logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "application.log");
             string logMessage = $"{DateTime.Now} [{level}] : {message}";
-            
+
             const int maxFileSizeInBytes = 5 * 1024 * 1024;
 
             if (File.Exists(logFilePath) && new FileInfo(logFilePath).Length > maxFileSizeInBytes)
@@ -310,6 +309,12 @@ namespace ADS
 
             File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
         }
+
+        private void selectedFileConfig_Click(object sender, EventArgs e)
+        {
+
+        }
+
         public enum LogLevel
         {
             INFO,
