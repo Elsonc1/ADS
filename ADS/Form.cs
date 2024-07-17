@@ -11,13 +11,15 @@ namespace ADS
         LogHelper logHelper = new LogHelper();
         Process process = new Process();
         Config config = new Config();
+        XmlConfig xmlConfig = new XmlConfig();
         string folderContent;
         string connectionString = string.Empty;
         string[] xmlFiles;
+        string configFilePath = string.Empty;
         public readXml()
         {
             InitializeComponent();
-            config.LoadConfig();
+            config.LoadConfig(configFilePath);
             config.CreateOrUpdateConfig();
         }
         private void selectionButton_Click(object sender, EventArgs e)
@@ -143,18 +145,18 @@ namespace ADS
                 openFileDialog.RestoreDirectory = true;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string configFilePath = openFileDialog.FileName;
+                    configFilePath = openFileDialog.FileName;
                     try
                     {
                         string configXml = File.ReadAllText(configFilePath);
                         doc.LoadXml(configXml);
-                        textBoxHost.Text = doc.SelectSingleNode("/config/host").InnerText;
-                        textBoxBanco.Text = doc.SelectSingleNode("/config/banco").InnerText;
-                        textBoxUser.Text = doc.SelectSingleNode("/config/user").InnerText;
-                        textBoxPassword.Text = doc.SelectSingleNode("/config/password").InnerText;
+                        xmlConfig.Host = doc.SelectSingleNode("/config/host").InnerText;
+                        xmlConfig.Banco = doc.SelectSingleNode("/config/banco").InnerText;
+                        xmlConfig.User = doc.SelectSingleNode("/config/user").InnerText;
+                        xmlConfig.Password = doc.SelectSingleNode("/config/password").InnerText;
                         logHelper.LogMessage("Configuração carregada com sucesso a partir do arquivo selecionado.", LogHelper.LogLevel.INFO);
                         MessageBox.Show("Configuração carregada com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        config.SaveConfig(configXml);
+                        config.LoadConfig(configXml);
                     }
                     catch (Exception ex)
                     {

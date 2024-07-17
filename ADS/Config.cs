@@ -10,7 +10,7 @@ namespace ADS
         XmlConfig xmlConfig = new XmlConfig();
         XmlHelper xmlHelper = new XmlHelper();
         string loadConfig = string.Empty;
-        public void LoadConfig()
+        public string LoadConfig(string loadConfig)
         {
             LogHelper logHelper = new LogHelper();
             string configXml = SaveConfig(loadConfig);
@@ -27,6 +27,7 @@ namespace ADS
             {
                 logHelper.LogMessage($"Erro ao carregar configuração: {ex.Message}", LogHelper.LogLevel.ERROR);
             }
+            return configXml;
         }
         public void CreateOrUpdateConfig(bool isUpdate = false)
         {
@@ -40,6 +41,7 @@ namespace ADS
         }
         public string SaveConfig(string saveConfig)
         {
+            saveConfig = string.Concat(Directory.GetCurrentDirectory(), "\\config.xml");
             loadConfig = saveConfig;
             return File.ReadAllText(loadConfig);
         }
